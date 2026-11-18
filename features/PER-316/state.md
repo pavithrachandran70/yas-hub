@@ -1,15 +1,15 @@
 ---
 schema_version: 1
 key: PER-316
-status: in_development
-current_node: dev
+status: pr_reviewed
+current_node: pr_review
 track: standard
 involved_repos:
 - app
 depends_on: []
 owner: pavc
 lease_until: '2026-11-20T11:21:54.114693+00:00'
-revision: 88
+revision: 92
 hub_sha: null
 ticket_hash: 7cb1ce0419c11a5d
 jira_hash: 7cb1ce0419c11a5d
@@ -33,10 +33,11 @@ pr_ids:
   hub_plan: '2'
   hub_arch: '3'
   hub: '3'
-waiting_for: null
-tokens_in: 2517291
-tokens_out: 147998
-cost_anthropic_usd: 9.771491
+  app: '1'
+waiting_for: feature_pr_human
+tokens_in: 2560367
+tokens_out: 148005
+cost_anthropic_usd: 9.900824
 cursor_tokens_in: 1325930
 cursor_tokens_out: 177727
 cursor_cache_read_tokens: 13895296
@@ -272,6 +273,24 @@ history:
 - node: dev
   note: done 03-app
   at: '2026-11-18T17:29:45.833552+00:00'
+- node: pre_pr_qa
+  note: report written
+  at: '2026-11-18T17:29:52.739842+00:00'
+- node: open_pr
+  note: push app ok
+  at: '2026-11-18T17:30:00.746487+00:00'
+- node: open_pr
+  note: PRs opened app:1
+  at: '2026-11-18T17:30:00.746513+00:00'
+- node: pr_review
+  note: 'cross-repo check app: no contract used by other repos is touched'
+  at: '2026-11-18T17:30:02.959683+00:00'
+- node: pr_review
+  note: diff loaded app chars=1050888
+  at: '2026-11-18T17:30:04.309338+00:00'
+- node: pr_review
+  note: awaiting feature_pr_human
+  at: '2026-11-18T17:30:12.554302+00:00'
 ---
 
 # Feature state

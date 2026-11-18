@@ -11,3 +11,4 @@ JSON:{"key": "tracker:blocks:PER-316:PER-318:PER-320", "intent": "add_blocker", 
 JSON:{"key": "tracker:blocks:PER-316:PER-319:PER-320", "intent": "add_blocker", "result": "PER-319 blocks PER-320", "at": "2026-11-18T11:24:25.670293+00:00"}
 JSON:{"key": "tracker:summary:PER-316", "intent": "add_comment", "result": "sub-issue summary", "at": "2026-11-18T11:24:26.153483+00:00"}
 JSON:{"key": "tracker:published:PER-316", "intent": "publish_subissues", "result": ["PER-318", "PER-319", "PER-320"], "at": "2026-11-18T11:24:26.154592+00:00"}
+JSON:{"key": "codehost:open-pr:PER-316:app", "intent": "open_pr", "result": "1", "at": "2026-11-18T17:29:59.478749+00:00"}
