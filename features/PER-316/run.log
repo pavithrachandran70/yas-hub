@@ -102,3 +102,36 @@
 2026-11-18T13:48:00.544867+00:00 dev cursor 01-app usage model=Auto Balance in=199860 out=18431 cache_read=1347072 cache_write=0 ms=488835
 2026-11-18T13:59:31.563957+00:00 dev verify 01-app FAIL attempt=3
 2026-11-18T13:59:31.783141+00:00 node end dev waiting=dev_failure
+2026-11-18T14:02:17.052742+00:00 heartbeat dev
+2026-11-18T14:02:17.052804+00:00 node start dev
+2026-11-18T14:02:17.687564+00:00 dev cursor 01-app attempt=1
+2026-11-18T14:09:49.861500+00:00 dev cursor 01-app usage model=Auto Balance in=129724 out=20854 cache_read=1411840 cache_write=0 ms=445587
+2026-11-18T14:20:06.680391+00:00 dev verify 01-app PASS attempt=1
+2026-11-18T14:20:07.406730+00:00 dev cursor 01-app attempt=2
+2026-11-18T14:29:24.887929+00:00 dev cursor 01-app usage model=Auto Balance in=202408 out=24424 cache_read=1604096 cache_write=0 ms=550940
+2026-11-18T14:41:20.804896+00:00 dev verify 01-app PASS attempt=2
+2026-11-18T14:41:21.562784+00:00 dev cursor 01-app attempt=3
+2026-11-18T14:44:03.290618+00:00 heartbeat dev
+2026-11-18T14:44:03.290675+00:00 node start dev
+2026-11-18T14:44:04.013824+00:00 dev cursor 02-app attempt=1
+2026-11-18T15:26:34.096505+00:00 dev verify 02-app FAIL attempt=1
+2026-11-18T15:26:34.990678+00:00 dev cursor 02-app attempt=2
+2026-11-18T16:50:29.097391+00:00 heartbeat dev
+2026-11-18T16:50:29.097502+00:00 node start dev
+2026-11-18T16:50:30.556809+00:00 dev cursor 02-app attempt=1
+2026-11-18T17:04:14.036189+00:00 heartbeat dev
+2026-11-18T17:04:14.036796+00:00 node start dev
+2026-11-18T17:04:15.995798+00:00 dev cursor 02-app attempt=1
+2026-11-18T17:08:02.362334+00:00 dev cursor 02-app usage model=Auto Balance in=83351 out=13246 cache_read=738048 cache_write=0 ms=218730
+2026-11-18T17:08:02.362611+00:00 warning: no test command configured for app; verification skipped
+2026-11-18T17:08:02.365579+00:00 dev verify 02-app PASS attempt=1
+2026-11-18T17:08:02.463837+00:00 dev cursor 02-app attempt=2
+2026-11-18T17:10:55.219592+00:00 heartbeat dev
+2026-11-18T17:10:55.219916+00:00 node start dev
+2026-11-18T17:10:55.694340+00:00 dev cursor 03-app attempt=1
+2026-11-18T17:16:41.394847+00:00 heartbeat dev
+2026-11-18T17:16:41.394924+00:00 node start dev
+2026-11-18T17:16:41.931252+00:00 dev cursor 03-app attempt=1
+2026-11-18T17:29:45.686804+00:00 dev cursor 03-app usage model=Auto Balance in=208547 out=50455 cache_read=3712512 cache_write=0 ms=778228
+2026-11-18T17:29:45.687086+00:00 warning: no test command configured for app; verification skipped
+2026-11-18T17:29:45.687472+00:00 dev verify 03-app PASS attempt=1

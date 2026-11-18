@@ -1,7 +1,7 @@
 ---
 schema_version: 1
 key: PER-316
-status: escalated
+status: in_development
 current_node: dev
 track: standard
 involved_repos:
@@ -9,7 +9,7 @@ involved_repos:
 depends_on: []
 owner: pavc
 lease_until: '2026-11-20T11:21:54.114693+00:00'
-revision: 48
+revision: 88
 hub_sha: null
 ticket_hash: 7cb1ce0419c11a5d
 jira_hash: 7cb1ce0419c11a5d
@@ -26,20 +26,20 @@ child_ticket_keys:
 - PER-319
 - PER-320
 critic_iterations: 2
-dev_retries: 3
+dev_retries: 1
 pr_revision_rounds: 0
 gate_rounds: {}
 pr_ids:
   hub_plan: '2'
   hub_arch: '3'
   hub: '3'
-waiting_for: dev_failure
+waiting_for: null
 tokens_in: 2517291
 tokens_out: 147998
 cost_anthropic_usd: 9.771491
-cursor_tokens_in: 701900
-cursor_tokens_out: 68748
-cursor_cache_read_tokens: 6428800
+cursor_tokens_in: 1325930
+cursor_tokens_out: 177727
+cursor_cache_read_tokens: 13895296
 cursor_cache_write_tokens: 0
 history:
 - node: intake
@@ -199,6 +199,79 @@ history:
 - node: dev
   note: 'failed 01-app: test failed'
   at: '2026-11-18T13:59:31.765633+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T14:02:17.034349+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T14:02:17.053134+00:00'
+- node: dev
+  note: done 01-app
+  at: '2026-11-18T14:43:48.293224+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T14:44:03.270942+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T14:44:03.291186+00:00'
+- node: dev
+  note: 'stopped: repo graph: Neo4j is not reachable at bolt://127.0.0.1:7687: Couldn''t
+    connect to 127.0.0.1:7687 (resolved to (''127.0.0.1:7687'',)):'
+  at: '2026-11-18T16:46:06.262466+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: context deadline
+    exceeded; ret)'
+  at: '2026-11-18T16:50:29.070941+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T16:50:29.097955+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T17:04:13.979261+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T17:04:14.038249+00:00'
+- node: dev
+  note: 'not checked before PR, commands empty in project.yaml: repos.app.commands.test,
+    repos.app.commands.lint'
+  at: '2026-11-18T17:04:14.038300+00:00'
+- node: dev
+  note: done 02-app
+  at: '2026-11-18T17:10:27.853988+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T17:10:55.170861+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T17:10:55.221562+00:00'
+- node: dev
+  note: 'not checked before PR, commands empty in project.yaml: repos.app.commands.test,
+    repos.app.commands.lint'
+  at: '2026-11-18T17:10:55.221637+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T17:16:41.361421+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T17:16:41.395416+00:00'
+- node: dev
+  note: 'not checked before PR, commands empty in project.yaml: repos.app.commands.test,
+    repos.app.commands.lint'
+  at: '2026-11-18T17:16:41.395437+00:00'
+- node: dev
+  note: done 03-app
+  at: '2026-11-18T17:29:45.833552+00:00'
 ---
 
 # Feature state

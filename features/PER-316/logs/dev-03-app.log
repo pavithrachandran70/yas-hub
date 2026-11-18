@@ -1,0 +1,40 @@
+I'll implement story 03-app from the story file and the repo graph context, then run the relevant tests.
+The story is clear: add wishlist items to the cart and block discontinued products. I'll match the existing cart, customer, and storefront patterns before writing code.
+I'll implement the PER-316 app story from the story file and the repo's code context, then run the relevant tests.
+The story is detailed. I'll match it to the cart service, shared config, and wishlist UI that already exist so the new add-to-cart path fits the current code.
+The cart already keys items by customer and product, and the customer service already exposes wishlist details. I'll add the add-from-wishlist path on that existing model and wire it into the wishlist page.
+Cart unit tests and the wishlist Jest tests passed. I'll run the new cart integration test next, since it needs Docker.
+Signed-in shoppers can add a wishlist item to the cart. The wishlist entry stays in place, and a discontinued product cannot be added.
+
+`POST /storefront/items/from-wishlist` loads the wishlist item from the customer service, checks that it belongs to the signed-in shopper, and rejects unavailable products with “Product is no longer available and cannot be added to the cart.” A new cart line is created with quantity 1, or the existing line’s quantity is increased. The wishlist page shows **Add to Cart** for available products and a disabled **Unavailable** button plus the discontinued explanation otherwise.
+
+No new database migration was added. `cart_item` already has a primary key on `(customer_id, product_id)`. The customer service URL was already configured.
+
+**Tests**
+- Cart unit tests: 34 passed.
+- `WishlistServiceIT`: passed.
+- Storefront wishlist Jest tests: 10 passed.
+- The wishlist page was not opened in a browser.
+
+**Files changed**
+- `cart/src/main/java/com/yas/cart/controller/CartItemController.java`
+- `cart/src/main/java/com/yas/cart/config/SecurityConfig.java`
+- `cart/src/main/java/com/yas/cart/service/CartItemService.java`
+- `cart/src/main/java/com/yas/cart/service/WishlistService.java`
+- `cart/src/main/java/com/yas/cart/viewmodel/WishlistItemToCartVm.java`
+- `cart/src/main/java/com/yas/cart/viewmodel/WishlistItemDetailVm.java`
+- `cart/src/main/java/com/yas/cart/utils/Constants.java`
+- `cart/src/main/resources/messages/messages.properties`
+- `cart/src/test/java/com/yas/cart/controller/CartItemControllerTest.java`
+- `cart/src/test/java/com/yas/cart/controller/CartItemControllerSecurityTest.java`
+- `cart/src/test/java/com/yas/cart/service/CartItemServiceTest.java`
+- `cart/src/test/java/com/yas/cart/service/WishlistServiceTest.java`
+- `cart/src/it/java/com/yas/cart/service/WishlistServiceIT.java`
+- `common-library/src/main/resources/messages/messages.properties`
+- `storefront/services/cartService.ts`
+- `storefront/modules/wishlist/components/AddToCartButton.tsx`
+- `storefront/modules/wishlist/components/AddToCartButton.module.css`
+- `storefront/modules/wishlist/components/WishlistItem.tsx`
+- `storefront/modules/wishlist/components/WishlistItem.module.css`
+- `storefront/__tests__/wishlist/AddToCartButton.test.tsx`
+- `storefront/__tests__/wishlist/WishlistItem.test.tsx`

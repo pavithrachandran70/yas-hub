@@ -1,0 +1,49 @@
+I'll implement story 02-app from the PER-316 feature. First I'll read the story and the repo graph so the change stays inside that scope.
+The story is a storefront wishlist page. I'll match the existing storefront auth, header, and product-page patterns before adding those files.
+The storefront uses the Pages Router and cookie sessions, so I’ll add the wishlist page, services, and header link in that structure and keep the guest redirect to sign-in.
+Maven ran on Java 17, but this project’s classes were built with Java 25. I’ll point the test run at Java 25 and run it again.
+
+Cursor agent timed out
+I'll implement the PER-316 story from the story file and the repo's code context, then run the tests.
+The story assumes an App Router layout, but the storefront may already use a different structure. I'll match the existing app before adding the wishlist page.
+The storefront uses the Pages Router, and some wishlist files are already in progress. I'll compare them with the story and the existing auth and product patterns.
+The wishlist UI is already adapted to the Pages Router. I'll run the storefront tests and `mvn test`, and install JDK 25 first so the Maven build can compile.
+The first Maven run stopped during the product module before it printed a result. I'll resume `mvn test` from that module and wait for it to finish.
+I'll implement story 02-app from the story file and the repo graph context, then run the test suite.
+The story assumes an App Router layout, but this storefront looks like Pages Router. I'll match the existing structure and auth pattern before writing the wishlist UI.
+Storefront tests passed. Next I’ll run the Maven suite and check whether the JDK matches what the build expects.
+I'll implement story 02-app from the feature file and start by reading the story, the code context, and the local skill guidance.
+The story assumes an App Router layout, so I’ll check the real storefront structure and any wishlist work already in the tree before writing code.
+The wishlist files are already in the Pages Router layout. I’ll compare them with the existing header, product page, and auth patterns to see what’s still missing.
+Jest is installed. I’ll run the wishlist tests next and fix anything that fails.
+The storefront wishlist page for story 02-app is in place on the existing Pages Router, and the Jest suite passes.
+
+Signed-in shoppers can open `/wishlist`, see saved items, and remove one so it drops off the list. A discontinued product shows its discontinued message. Guests are sent to `/login?returnUrl=/wishlist`. The header shows a Wishlist link only after sign-in, and the product page has an Add to Wishlist button next to Add to cart. Auth follows the storefront session (`/authentication`) and still accepts an `access_token` when one is stored. Requests go to `/api/customer/storefront/wishlist`, the same prefix the profile and cart clients use.
+
+`npm test` in `storefront`: 2 suites, 8 tests, all passed. ESLint on the touched files reported only an existing `useMemo` warning in `ProductDetails.tsx`. I could not click through the running app; the full storefront stack is not up here.
+
+**New**
+- `storefront/pages/wishlist/index.tsx`
+- `storefront/pages/wishlist/wishlist.module.css`
+- `storefront/modules/wishlist/components/WishlistItem.tsx`
+- `storefront/modules/wishlist/components/WishlistItem.module.css`
+- `storefront/services/wishlistService.ts`
+- `storefront/services/authService.ts`
+- `storefront/types/wishlist.ts`
+- `storefront/__tests__/wishlist/page.test.tsx`
+- `storefront/__tests__/wishlist/WishlistItem.test.tsx`
+- `storefront/jest.config.js`
+- `storefront/jest.setup.js`
+- `storefront/.eslintignore`
+
+**Updated**
+- `storefront/common/components/common/Header.tsx`
+- `storefront/styles/Header.css`
+- `storefront/modules/catalog/components/ProductDetails.tsx`
+- `storefront/package.json`
+- `storefront/package-lock.json`
+- `storefront/tsconfig.json`
+- `storefront/next-env.d.ts`
+I'll implement story 02-app from the PER-316 feature file and start by reading the story, code context, and the local skill guidance.
+The story assumes App Router paths, so I’ll check the storefront layout and any wishlist work already in the tree before writing code.
+The storefront already has a Pages Router wishlist draft. I’ll compare it with the real auth, API, and product-page patterns so the story matches how this app actually works.

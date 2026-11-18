@@ -161,3 +161,80 @@ Shoppers can add, list, and remove wishlist items at `/storefront/wishlist`. Add
 - `customer/src/test/java/com/yas/customer/controller/WishlistControllerTest.java`
 - `customer/src/test/java/com/yas/customer/controller/WishlistControllerSecurityTest.java`
 - `customer/src/it/java/com/yas/customer/service/WishlistServiceIT.java` (integration tests; `mvn test` does not run the `*IT` classes)
+I'll implement the PER-316 story from the story file and code context, then run the repo tests.
+The story is already partly in the working tree. I'll compare that code with existing customer and cart patterns and close any gaps.
+The wishlist API is already in the customer service. I'll run the customer module tests and fix anything that fails.
+Tests failed because Maven ran on Java 17 while the project is built for Java 25. I'll switch to the Java 25 JDK and rerun.
+The customer service now stores a signed-in shopper's wishlist and exposes the storefront API for it. `mvn test -pl customer -am` passed on Java 25 (52 customer tests, 0 failures).
+
+Signed-in callers can add, list, and remove wishlist items. Adding the same product again returns 200 without a second row. Guests get 401. Product names, prices, and availability come from the product service's featured-product list.
+
+**New**
+- `customer/src/main/resources/db/changelog/ddl/changelog-0002.sql` — `wishlist_item` table, sequence, unique `(customer_id, product_id)`, customer index
+- `customer/src/main/java/com/yas/customer/model/WishlistItem.java`
+- `customer/src/main/java/com/yas/customer/repository/WishlistItemRepository.java`
+- `customer/src/main/java/com/yas/customer/service/WishlistService.java`
+- `customer/src/main/java/com/yas/customer/service/ProductService.java`
+- `customer/src/main/java/com/yas/customer/controller/WishlistController.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/product/ProductThumbnailVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemPostVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemListVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemDetailVm.java`
+- `customer/src/test/java/com/yas/customer/service/WishlistServiceTest.java`
+- `customer/src/test/java/com/yas/customer/controller/WishlistControllerTest.java`
+- `customer/src/test/java/com/yas/customer/controller/WishlistControllerSecurityTest.java`
+- `customer/src/it/java/com/yas/customer/service/WishlistServiceIT.java`
+
+**Updated**
+- `customer/src/main/java/com/yas/customer/config/SecurityConfig.java` — `/storefront/wishlist/**` requires authentication
+- `customer/src/main/java/com/yas/customer/config/ServiceUrlConfig.java` — product service URL
+- `customer/src/main/java/com/yas/customer/utils/Constants.java` — wishlist and product error codes
+- `customer/src/main/resources/application.properties`
+- `customer/src/main/resources/messages/messages.properties`
+- `customer/src/test/resources/application.properties`
+- `customer/src/test/resources/messages/messages.properties`
+- `customer/src/it/resources/application.properties`
+
+Endpoints, under `/customer`:
+- `POST /storefront/wishlist/items`
+- `GET /storefront/wishlist/items`
+- `GET /storefront/wishlist/items/{wishlistItemId}`
+- `DELETE /storefront/wishlist/items/{wishlistItemId}`The JDK search finished and found Java 25 at `/home/pavc/.jdks/jdk-25.0.5+8`. Customer module tests were run with that JDK and passed.
+I'll start by reading the PER-316 story and the repo code context so the implementation stays within what that story asks for.
+The story is a customer-service wishlist API. I'll compare the existing files with the patterns this service already uses, then fill any gaps before running tests.
+The wishlist code is already in place. I'll check it against the service's existing patterns and the product API so the tests have a real chance of passing.
+The wishlist API is already sketched in the customer service. I'll run the customer module tests next and fix whatever actually fails.
+Maven ran on Java 17 while this project is built for Java 25. I'll point the test run at a Java 25 JDK and rerun it.
+Unit tests passed. The wishlist integration test is not part of `mvn test`, so I’ll run it next and fix it if the Spring context or persistence checks fail.
+The customer service now stores a signed-in shopper's wishlist and exposes the storefront API for it. `mvn test -pl customer -am` passed on Java 25 (52 customer tests), and `WishlistServiceIT` passed against PostgreSQL (4 tests), including the unique constraint on `(customer_id, product_id)`.
+
+Signed-in callers can add, list, and remove wishlist items at `/storefront/wishlist/items`. Adding the same product again returns 200 without a second row. Guests get 401. Listing a wishlist loads product details from `GET /storefront/products/list-featured`; a missing product is marked discontinued, and a product-service failure is reported as unavailable.
+
+Files changed:
+
+- `customer/src/main/resources/db/changelog/ddl/changelog-0002.sql` — `wishlist_item` table, sequence, and unique constraint
+- `customer/src/main/java/com/yas/customer/model/WishlistItem.java`
+- `customer/src/main/java/com/yas/customer/repository/WishlistItemRepository.java`
+- `customer/src/main/java/com/yas/customer/service/WishlistService.java`
+- `customer/src/main/java/com/yas/customer/service/ProductService.java`
+- `customer/src/main/java/com/yas/customer/controller/WishlistController.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/product/ProductThumbnailVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemPostVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemListVm.java`
+- `customer/src/main/java/com/yas/customer/viewmodel/wishlist/WishlistItemDetailVm.java`
+- `customer/src/main/java/com/yas/customer/config/SecurityConfig.java` — `/storefront/wishlist/**` requires authentication
+- `customer/src/main/java/com/yas/customer/config/ServiceUrlConfig.java` — product service URL
+- `customer/src/main/java/com/yas/customer/utils/Constants.java` — wishlist error codes
+- `customer/src/main/resources/application.properties`
+- `customer/src/main/resources/messages/messages.properties`
+- `customer/src/test/resources/application.properties`
+- `customer/src/test/resources/messages/messages.properties`
+- `customer/src/it/resources/application.properties`
+- `customer/src/test/java/com/yas/customer/service/WishlistServiceTest.java`
+- `customer/src/test/java/com/yas/customer/controller/WishlistControllerTest.java`
+- `customer/src/test/java/com/yas/customer/controller/WishlistControllerSecurityTest.java`
+- `customer/src/it/java/com/yas/customer/service/WishlistServiceIT.java`
+I'll implement the PER-316 story from the story file and the repo's code context, then run `mvn test` and fix any real failures.
+The story is already partly in the tree. I'll compare it with the existing customer-service patterns and close any gaps before running tests.
