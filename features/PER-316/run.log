@@ -76,3 +76,18 @@
 2026-11-18T11:21:03.058707+00:00 heartbeat architect_gate
 2026-11-18T11:21:03.058843+00:00 node start architect_gate
 2026-11-18T11:21:11.759233+00:00 node end architect_gate waiting=architect_review
+2026-11-18T11:21:59.542276+00:00 heartbeat dev
+2026-11-18T11:21:59.542395+00:00 node start dev
+2026-11-18T11:22:01.103237+00:00 node fail dev: Linear GraphQL error: usage limit exceeded
+2026-11-18T11:24:19.682787+00:00 heartbeat dev
+2026-11-18T11:24:19.682867+00:00 node start dev
+2026-11-18T11:24:33.105974+00:00 dev cursor 01-app attempt=1
+2026-11-18T11:54:03.629814+00:00 dev cursor 01-app usage model=Auto Balance in=1417 out=1367 cache_read=332800 cache_write=0 ms=1759945
+2026-11-18T11:56:07.748080+00:00 dev verify 01-app FAIL attempt=1
+2026-11-18T11:56:09.479461+00:00 dev cursor 01-app attempt=2
+2026-11-18T12:24:39.595410+00:00 dev cursor 01-app usage model=Auto Balance in=287034 out=27082 cache_read=2982144 cache_write=0 ms=1696641
+2026-11-18T12:25:11.672212+00:00 dev verify 01-app FAIL attempt=2
+2026-11-18T12:25:12.139421+00:00 dev cursor 01-app attempt=3
+2026-11-18T12:29:04.728671+00:00 heartbeat dev
+2026-11-18T12:29:04.728917+00:00 node start dev
+2026-11-18T12:29:04.927522+00:00 node end dev waiting=dirty_worktree

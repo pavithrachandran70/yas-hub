@@ -1,42 +1,45 @@
 ---
 schema_version: 1
 key: PER-316
-status: waiting_architect_review
-current_node: architect_gate
+status: in_development
+current_node: dev
 track: standard
 involved_repos:
 - app
 depends_on: []
 owner: pavc
-lease_until: '2026-11-20T10:36:56.060557+00:00'
-revision: 19
+lease_until: '2026-11-20T11:21:54.114693+00:00'
+revision: 38
 hub_sha: null
 ticket_hash: 7cb1ce0419c11a5d
 jira_hash: 7cb1ce0419c11a5d
-tpm_approved: false
-specs_locked: false
+tpm_approved: true
+specs_locked: true
 skills_lock:
   bmad: 1cbcfa272fe65787c06a1fa164a901f46117cca7
 stories:
 - 01-app
 - 02-app
 - 03-app
-child_ticket_keys: []
+child_ticket_keys:
+- PER-318
+- PER-319
+- PER-320
 critic_iterations: 2
-dev_retries: 0
+dev_retries: 2
 pr_revision_rounds: 0
 gate_rounds: {}
 pr_ids:
   hub_plan: '2'
   hub_arch: '3'
   hub: '3'
-waiting_for: architect_review
+waiting_for: dirty_worktree
 tokens_in: 2517291
 tokens_out: 147998
 cost_anthropic_usd: 9.771491
-cursor_tokens_in: 0
-cursor_tokens_out: 0
-cursor_cache_read_tokens: 0
+cursor_tokens_in: 288451
+cursor_tokens_out: 28449
+cursor_cache_read_tokens: 3314944
 cursor_cache_write_tokens: 0
 history:
 - node: intake
@@ -149,6 +152,42 @@ history:
 - node: architect_gate
   note: awaiting human hub PR approval
   at: '2026-11-18T11:21:11.759116+00:00'
+- node: architect_gate
+  note: approved via hub PR (reconcile)
+  at: '2026-11-18T11:21:54.063805+00:00'
+- node: architect_gate
+  note: "forge unlocked architect_review \u2192 resume"
+  at: '2026-11-18T11:21:54.114753+00:00'
+- node: architect_gate
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T11:21:59.520810+00:00'
+- node: architect_gate
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T11:24:19.662736+00:00'
+- node: dev
+  note: 'sub-issues created from the approved breakdown: PER-318, PER-319, PER-320'
+  at: '2026-11-18T11:24:26.154837+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T11:24:26.154974+00:00'
+- node: catch_up
+  note: manual commit 179e813568c345bad3fce985088b5535e57481aa
+  at: '2026-11-18T12:28:59.804712+00:00'
+- node: catch_up
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T12:29:04.712692+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T12:29:04.729441+00:00'
+- node: dev
+  note: dirty worktree stashed
+  at: '2026-11-18T12:29:04.918350+00:00'
 ---
 
 # Feature state

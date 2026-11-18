@@ -28,3 +28,8 @@
 {"at": "2026-11-18T11:19:29.815805+00:00", "node": "spec_fixer", "event": "llm_ok", "model": "claude-sonnet-4-5-20250929", "in": 72964, "out": 7504, "cache_read": 0, "usd": 0.331452, "ms": 101994, "ok": true, "dry_run": false, "error": null}
 {"at": "2026-11-18T11:19:45.241257+00:00", "node": "spec_fixer", "event": "llm_ok", "model": "claude-sonnet-4-5-20250929", "in": 74735, "out": 919, "cache_read": 0, "usd": 0.23799, "ms": 15419, "ok": true, "dry_run": false, "error": null}
 {"at": "2026-11-18T11:21:02.963314+00:00", "node": "critic", "event": "llm_ok", "model": "claude-sonnet-4-5-20250929", "in": 138194, "out": 1445, "cache_read": 0, "usd": 0.436257, "ms": 31257, "ok": true, "dry_run": false, "error": null}
+{"at": "2026-11-18T11:22:01.102828+00:00", "node": "dev", "event": "fail", "ok": false, "error": "Linear GraphQL error: usage limit exceeded"}
+{"at": "2026-11-18T11:54:03.631380+00:00", "node": "dev", "event": "cursor_run", "ok": true, "status": "ok", "error": null, "story": "01-app", "model": "Auto Balance", "usage": {"input_tokens": 1417, "output_tokens": 1367, "cache_read_tokens": 332800, "cache_write_tokens": 0}}
+{"at": "2026-11-18T11:56:09.333040+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}
+{"at": "2026-11-18T12:24:39.596433+00:00", "node": "dev", "event": "cursor_run", "ok": true, "status": "ok", "error": null, "story": "01-app", "model": "Auto Balance", "usage": {"input_tokens": 287034, "output_tokens": 27082, "cache_read_tokens": 2982144, "cache_write_tokens": 0}}
+{"at": "2026-11-18T12:25:12.046636+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}

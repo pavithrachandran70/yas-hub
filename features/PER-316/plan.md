@@ -24,7 +24,7 @@ Wishlist feature with persistence across sessions, requiring customer storage sc
    - focus: Map each acceptance criterion to specific test cases, especially for: idempotent adds, cross-session persistence, discontinued product display-but-no-add-to-cart, and guest sign-in redirection.
 6. [x] **merge_pack (pack)** _(auto)_ — Loop feature_with_architecture: Deterministic merged_plan.md from ordered specs and story summaries.
 7. [x] **critic (consistency_check)** — Requirements, HLD, breakdown, and story LLDs must agree on the wishlist schema, API contract, and cross-service integration points.
-8. [ ] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
+8. [x] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
 9. [ ] **dev** _(auto)_ — Loop delivery.
 10. [ ] **pre_pr_qa** _(auto)_ — Loop delivery.
 11. [ ] **open_pr** _(auto)_ — Loop delivery.
