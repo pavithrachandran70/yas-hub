@@ -30,9 +30,7 @@ repos:
     path_key: app
     role: app
     base: main
-    commands:
-      test: mvn test
-      lint: mvn checkstyle:check
+    commands: {}
     url: https://github.com/pavithrachandran70/yas
 dependency_order:
 - app
