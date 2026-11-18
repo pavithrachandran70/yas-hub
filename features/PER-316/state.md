@@ -1,7 +1,7 @@
 ---
 schema_version: 1
 key: PER-316
-status: in_development
+status: escalated
 current_node: dev
 track: standard
 involved_repos:
@@ -9,7 +9,7 @@ involved_repos:
 depends_on: []
 owner: pavc
 lease_until: '2026-11-20T11:21:54.114693+00:00'
-revision: 38
+revision: 48
 hub_sha: null
 ticket_hash: 7cb1ce0419c11a5d
 jira_hash: 7cb1ce0419c11a5d
@@ -26,20 +26,20 @@ child_ticket_keys:
 - PER-319
 - PER-320
 critic_iterations: 2
-dev_retries: 2
+dev_retries: 3
 pr_revision_rounds: 0
 gate_rounds: {}
 pr_ids:
   hub_plan: '2'
   hub_arch: '3'
   hub: '3'
-waiting_for: dirty_worktree
+waiting_for: dev_failure
 tokens_in: 2517291
 tokens_out: 147998
 cost_anthropic_usd: 9.771491
-cursor_tokens_in: 288451
-cursor_tokens_out: 28449
-cursor_cache_read_tokens: 3314944
+cursor_tokens_in: 701900
+cursor_tokens_out: 68748
+cursor_cache_read_tokens: 6428800
 cursor_cache_write_tokens: 0
 history:
 - node: intake
@@ -188,6 +188,17 @@ history:
 - node: dev
   note: dirty worktree stashed
   at: '2026-11-18T12:29:04.918350+00:00'
+- node: dev
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-18T12:29:53.481094+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-18T12:29:53.502447+00:00'
+- node: dev
+  note: 'failed 01-app: test failed'
+  at: '2026-11-18T13:59:31.765633+00:00'
 ---
 
 # Feature state

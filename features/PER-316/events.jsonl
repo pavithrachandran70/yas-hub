@@ -33,3 +33,9 @@
 {"at": "2026-11-18T11:56:09.333040+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}
 {"at": "2026-11-18T12:24:39.596433+00:00", "node": "dev", "event": "cursor_run", "ok": true, "status": "ok", "error": null, "story": "01-app", "model": "Auto Balance", "usage": {"input_tokens": 287034, "output_tokens": 27082, "cache_read_tokens": 2982144, "cache_write_tokens": 0}}
 {"at": "2026-11-18T12:25:12.046636+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}
+{"at": "2026-11-18T12:46:42.410157+00:00", "node": "dev", "event": "cursor_run", "ok": true, "status": "ok", "error": null, "story": "01-app", "model": "Auto Balance", "usage": {"input_tokens": 213589, "output_tokens": 21868, "cache_read_tokens": 1766784, "cache_write_tokens": 0}}
+{"at": "2026-11-18T12:53:10.417933+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}
+{"at": "2026-11-18T13:23:12.906051+00:00", "node": "dev", "event": "cursor_run", "ok": false, "status": "timeout", "error": "Cursor agent timed out", "story": "01-app", "model": "Auto Balance", "usage": null}
+{"at": "2026-11-18T13:39:35.800241+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}
+{"at": "2026-11-18T13:48:00.545185+00:00", "node": "dev", "event": "cursor_run", "ok": true, "status": "ok", "error": null, "story": "01-app", "model": "Auto Balance", "usage": {"input_tokens": 199860, "output_tokens": 18431, "cache_read_tokens": 1347072, "cache_write_tokens": 0}}
+{"at": "2026-11-18T13:59:31.748988+00:00", "node": "dev", "event": "verify_fail", "ok": false, "error": "test failed"}

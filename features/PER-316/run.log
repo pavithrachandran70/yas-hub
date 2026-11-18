@@ -91,3 +91,14 @@
 2026-11-18T12:29:04.728671+00:00 heartbeat dev
 2026-11-18T12:29:04.728917+00:00 node start dev
 2026-11-18T12:29:04.927522+00:00 node end dev waiting=dirty_worktree
+2026-11-18T12:29:53.501979+00:00 heartbeat dev
+2026-11-18T12:29:53.502060+00:00 node start dev
+2026-11-18T12:29:54.868368+00:00 dev cursor 01-app attempt=1
+2026-11-18T12:46:42.408928+00:00 dev cursor 01-app usage model=Auto Balance in=213589 out=21868 cache_read=1766784 cache_write=0 ms=1001706
+2026-11-18T12:53:10.217406+00:00 dev verify 01-app FAIL attempt=1
+2026-11-18T12:53:10.540253+00:00 dev cursor 01-app attempt=2
+2026-11-18T13:39:35.377997+00:00 dev verify 01-app FAIL attempt=2
+2026-11-18T13:39:36.043440+00:00 dev cursor 01-app attempt=3
+2026-11-18T13:48:00.544867+00:00 dev cursor 01-app usage model=Auto Balance in=199860 out=18431 cache_read=1347072 cache_write=0 ms=488835
+2026-11-18T13:59:31.563957+00:00 dev verify 01-app FAIL attempt=3
+2026-11-18T13:59:31.783141+00:00 node end dev waiting=dev_failure
