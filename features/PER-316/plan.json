@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "key": "PER-316",
+  "source": "llm",
+  "summary": "Wishlist feature with persistence across sessions, requiring customer storage schema changes, API endpoints, and UI pages across multiple domains (customer, product, cart), so it needs an HLD and breakdown into stories.",
+  "track_hint": "standard",
+  "loop": "feature_with_architecture",
+  "delivery": "delivery",
+  "pr_fix": [
+    "pr_fix_minor",
+    "pr_fix_moderate"
+  ],
+  "loops": [
+    "feature_with_architecture",
+    "delivery",
+    "pr_fix_minor",
+    "pr_fix_moderate"
+  ],
+  "steps": [
+    {
+      "node": "analyst",
+      "activity": "requirements",
+      "why": "Turn the ticket into structured requirements with Given/When/Then acceptance criteria.",
+      "instructions": "Focus on the persistence contract (what identifies a saved item), the cross-domain interactions (customer owns the list, product provides the item data, cart receives items), and the guest vs signed-in distinction.",
+      "auto": false,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "architect",
+      "activity": "hld",
+      "why": "This adds database schema (wishlist table), new API endpoints (add/remove/list wishlist items, add to cart from wishlist), and contracts between customer/product/cart domains.",
+      "instructions": "Design the wishlist storage schema, the REST API contract for wishlist operations, how discontinued products are handled in queries, and the integration points between customer service (owns wishlist), product service (provides item details), and cart service (receives items from wishlist).",
+      "auto": false,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "scrum_master",
+      "activity": "breakdown",
+      "why": "The ticket explicitly states this splits into several stories: persistence layer, storefront UI, and cart integration.",
+      "instructions": "Break down into: (1) backend wishlist storage and API, (2) UI wishlist page with add/remove/view, (3) add-to-cart integration, ensuring each story is independently shippable.",
+      "auto": false,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "designer",
+      "activity": "lld",
+      "why": "Each story needs concrete file plans for database migrations, API controllers, service layer, and UI components.",
+      "instructions": "Provide file-level implementation plans: which entity classes, repository interfaces, controller endpoints, service methods, and UI components each story needs.",
+      "auto": false,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "test_architect",
+      "activity": "tests",
+      "why": "The acceptance criteria include important edge cases: duplicate prevention, persistence across sessions, discontinued product handling, and guest access prevention.",
+      "instructions": "Map each acceptance criterion to specific test cases, especially for: idempotent adds, cross-session persistence, discontinued product display-but-no-add-to-cart, and guest sign-in redirection.",
+      "auto": false,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "merge_pack",
+      "activity": "pack",
+      "why": "Loop feature_with_architecture: Deterministic merged_plan.md from ordered specs and story summaries.",
+      "instructions": "",
+      "auto": true,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "critic",
+      "activity": "consistency_check",
+      "why": "Requirements, HLD, breakdown, and story LLDs must agree on the wishlist schema, API contract, and cross-service integration points.",
+      "instructions": "",
+      "auto": false,
+      "status": "done",
+      "rerun": false
+    },
+    {
+      "node": "architect_gate",
+      "activity": "review",
+      "why": "Human approval of specs and this plan before Dev.",
+      "instructions": "",
+      "auto": true,
+      "status": "pending",
+      "rerun": false
+    },
+    {
+      "node": "dev",
+      "activity": null,
+      "why": "Loop delivery.",
+      "instructions": "",
+      "auto": true,
+      "status": "pending",
+      "rerun": false
+    },
+    {
+      "node": "pre_pr_qa",
+      "activity": null,
+      "why": "Loop delivery.",
+      "instructions": "",
+      "auto": true,
+      "status": "pending",
+      "rerun": false
+    },
+    {
+      "node": "open_pr",
+      "activity": null,
+      "why": "Loop delivery.",
+      "instructions": "",
+      "auto": true,
+      "status": "pending",
+      "rerun": false
+    },
+    {
+      "node": "pr_review",
+      "activity": null,
+      "why": "Loop delivery.",
+      "instructions": "",
+      "auto": true,
+      "status": "pending",
+      "rerun": false
+    },
+    {
+      "node": "merge",
+      "activity": null,
+      "why": "Loop delivery.",
+      "instructions": "",
+      "auto": true,
+      "status": "pending",
+      "rerun": false
+    }
+  ],
+  "skipped": [
+    {
+      "node": "tpm_gate",
+      "why": "The ticket clearly defines scope and acceptance criteria; no product ambiguity that needs pre-technical sign-off."
+    }
+  ],
+  "suggested_roles": [],
+  "suggested_loops": [],
+  "checks": [
+    {
+      "line": "N1",
+      "applies": false,
+      "why": "This is a multi-story feature requiring new database schema (wishlist table), new API endpoints (add/remove/list wishlist, add to cart from wishlist), and cross-domain contracts between customer, product, and cart services.",
+      "feedback_id": ""
+    }
+  ],
+  "notes": [],
+  "created_at": "2026-11-18T10:35:41.565533+00:00",
+  "version": 1,
+  "trigger": "ticket",
+  "gate": null,
+  "feedback": [],
+  "feedback_errors": [],
+  "seen_feedback_ids": [],
+  "change_summary": "",
+  "changes": null,
+  "addressed": [],
+  "unresolved_questions": [],
+  "requires_review": true
+}

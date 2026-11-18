@@ -1,0 +1,205 @@
+{
+  "items": [
+    {
+      "id": "C1",
+      "file": "specs/2.md",
+      "section": "(entire file)",
+      "quote": "# Technical Specification \u2014 Ticket 2 ... **Title:** Wishlist persistence and API endpoints",
+      "match": [
+        [
+          "breakdown.md",
+          "## Story 2: Storefront wishlist page"
+        ]
+      ],
+      "problem": "The file `specs/2.md` contains the backend API spec (database schema, Java entities, REST endpoints) but the breakdown states Story 2 is \"Storefront wishlist page\" (UI components, Next.js pages, TypeScript API client).",
+      "change": "Replace the content of `specs/2.md` with the Story 2 UI spec from `stories/02-app.md` (sections: Overview, Stack, Acceptance Criteria, File Touch List, TypeScript Interfaces, API Client, Wishlist Page Component, Wishlist Item Component, Header Modification, Product Page Modification, Tests).",
+      "status": "outdated",
+      "reason": "its quote is in no spec file",
+      "round": 3,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would build backend Java/Spring Boot code (entities, REST controllers, database migrations) for a story that must deliver UI components (TypeScript/Next.js, React pages in `storefront/src/app/wishlist/`). The breakdown says Story 2 is \"Storefront wishlist page\" delivering `page.tsx`, `WishlistItem.tsx`, and `wishlistService.ts`. This spec describes backend `WishlistItem.java`, `WishlistController.java`, and SQL migrations. Dev would build the wrong artifact in the wrong language.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: fix failed: fix refused: would drop sections: ac-2: the same product cannot appear twice on one shopper's wishlist, api contract, controller: `wishlistcontroller, customer database, customer service \u2014 wishlist endpoints, delete /api/customer/storefront/wishlist/items/{wishlistitemid}, get /api/customer/storefront/wishlist/items, get /api/customer/storefront/wishlist/items/{wishlistitemid}` (internal), jpa entity: `wishlistitem, post /api/customer/storefront/wishlist/items, repository: `wishlistitemrepository, risk-1: product service latency on wishlist list, risk-2: orphaned wishlist items after product deletion, risk-3: duplicate check race condition, schema changes, security configuration, service: `wishlistservice, technical specification \u2014 ticket 2, viewmodels",
+        "round 2: raised again (blocking)",
+        "round 2: fix failed: fix refused: would drop sections: ac-2: the same product cannot appear twice on one shopper's wishlist, api contract, controller: `wishlistcontroller, customer database, customer service \u2014 wishlist endpoints, delete /api/customer/storefront/wishlist/items/{wishlistitemid}, get /api/customer/storefront/wishlist/items, get /api/customer/storefront/wishlist/items/{wishlistitemid}` (internal), implementation details, jpa entity: `wishlistitem, post /api/customer/storefront/wishlist/items, repository: `wishlistitemrepository, risk-1: product service latency on wishlist list, risk-2: orphaned wishlist items after product deletion, risk-3: duplicate check race condition, schema changes, security configuration, service: `wishlistservice, technical specification \u2014 ticket 2, viewmodels",
+        "round 3: raised again (blocking)",
+        "round 3: outdated: its quote is in no spec file"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C2",
+      "file": "specs/3.md",
+      "section": "Technical Stub \u2014 PER-316-3 \u203a File Touch List \u203a Customer Service (`customer/`) \u203a Modified Files",
+      "quote": "If does not exist, create with method: `ProductDetailVm getProduct(Long productId)`",
+      "match": [],
+      "problem": "The breakdown says to create `ProductService.getProduct(Long productId)` returning `ProductDetailVm` if the service does not exist. The cart service already has `ProductService` (see `cart/src/main/java/com/yas/cart/service/ProductService.java`) with `getProductById(Long id)` returning `ProductThumbnailVm` and `getProducts(List<Long> ids)` returning `List<ProductThumbnailVm>`. The story is for the customer service, which does not have a `ProductService`.",
+      "change": "In the customer service, create `ProductService` with `getProductById(Long id)` returning `ProductThumbnailVm` (matching the cart service pattern) or `getProducts(List<Long> ids)` for batch fetching. Update `WishlistService.fetchProductDetailsAsync()` to use this method and map `ProductThumbnailVm` fields to `WishlistItemGetVm` fields. Remove reference to `ProductDetailVm` (which does not exist in the codebase shown).",
+      "status": "fixed",
+      "reason": "confirmed in round 2",
+      "round": 1,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would create a new `ProductService` in the customer service with a `getProduct()` method returning `ProductDetailVm`, but the cart service's existing `ProductService` has no such method\u2014it has `getProducts(List<Long> ids)` and `getProductById(Long id)` returning `ProductThumbnailVm`. Dev would use the wrong method signature and return type, breaking the API contract.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: moved from `breakdown.md`: the quoted text is in `specs/3.md`",
+        "round 1: unchecked: fixed in `specs/3.md`, not checked yet",
+        "round 2: fixed: confirmed in round 2"
+      ],
+      "fix_rounds": [
+        1
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C3",
+      "file": "stories/01-app.md",
+      "section": "## Java Implementation \u203a ### 3. Service: `ProductService` (new, if missing)",
+      "quote": "Action Required:** Verify if `ProductService` already exists in `customer` service. If missing, create it following the `LocationService` pattern",
+      "match": [],
+      "problem": "The LLD's `ProductService` implementation has two issues: (1) the `getProducts()` method's URL construction passes `ids` (a `List<Long>`) to `queryParam(\"productId\", ids)` without converting to a comma-separated string (the cart service does the same, but the product service endpoint format is not verified in the docs, so this might fail), and (2) the `getProductById()` method calls `products.getFirst()` on a list that could be empty (no null check), which would throw `NoSuchElementException` at runtime if the product doesn't exist. The story says `existsById()` checks for existence, but `getProductById()` is called in `WishlistService.getWishlistItems()` without that check.",
+      "change": "In `ProductService.getProductById()`, add a null check: `if (CollectionUtils.isEmpty(products)) { return null; }` before `return products.getFirst();`. This matches the cart service's `ProductService.getProductById()` implementation pattern (see `repo-file/app/cart/src/main/java/com/yas/cart/service/ProductService.java`). The URL construction is assumed to work based on the cart service using the same pattern; if the product service endpoint format differs, verify and adjust.",
+      "status": "fixed",
+      "reason": "confirmed in round 3",
+      "round": 2,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "The repo-outline shows no `ProductService` in `customer/src/main/java/com/yas/customer/service/`, so the developer would create it. But the LLD's implementation calls `restClient.get().uri(url).retrieve().body(new ParameterizedTypeReference<List<ProductThumbnailVm>>() {})`, which returns `List<ProductThumbnailVm>`, not a single `ProductThumbnailVm`. The `getProductById(Long id)` method would fail at runtime because the LLD's `getProductById` implementation does `products.getFirst()` on a list that might be empty, and it uses `getProducts(List.of(id))` which the product service endpoint `/storefront/products/list-featured?productId={ids}` expects as a comma-separated query param (see cart service's `ProductService.getProducts()`), but the LLD code passes `List.of(id)` directly to `queryParam(\"productId\", ids)` without converting to a string.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: outdated: its quote is in no spec file",
+        "round 2: raised again (blocking)",
+        "round 2: unchecked: fixed in `stories/01-app.md`, not checked yet",
+        "round 3: fixed: confirmed in round 3"
+      ],
+      "fix_rounds": [
+        2
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C4",
+      "file": "stories/01-app.md",
+      "section": "## REST API Contract \u203a ### Endpoint: `GET /api/customer/storefront/wishlist/items` \u203a **Behavior:",
+      "quote": "For each `wishlist_item`, fetch product details via `ProductService.getProducts(List.of(productId))`",
+      "match": [
+        [
+          "breakdown.md",
+          "## Story 1: Backend wishlist storage and API \u203a ### Implementation Pointers \u203a **Service (new):** \u203a Method: `getWishlistItems(String customerId)` \u2014 SELECT wishlist items, fetch product details in parallel with `CompletableFuture` (2s timeout per product)"
+        ]
+      ],
+      "problem": "Story 1 LLD says to call `getProducts(List.of(productId))` for each item, implying sequential or batched calls. The breakdown says to fetch product details \"in parallel with `CompletableFuture`\" with a 2-second timeout per product. These are two different strategies.",
+      "change": "Align both documents: state that the service calls `getProducts(List.of(productId))` for each wishlist item in parallel using `CompletableFuture`, with a 2-second timeout per product. The final implementation collects all results before returning the response. If a batch endpoint is available, prefer that; otherwise, use parallel single-product calls.",
+      "status": "fixed",
+      "reason": "confirmed in round 2",
+      "round": 1,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": false,
+      "blocks_because": "Dev would call `getProducts()` once per item (inefficient but not blocking) or in a loop, but the breakdown says to use parallel `CompletableFuture` calls. The LLD's single-call approach and the breakdown's parallel approach are different implementations; dev would have to choose, and inconsistency means they might pick the slower one.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: unchecked: fixed in `stories/01-app.md`, not checked yet",
+        "round 2: fixed: confirmed in round 2"
+      ],
+      "fix_rounds": [
+        1
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C4",
+      "file": "specs/3.md",
+      "section": "## Database Schema \u203a ### Cart Service \u2014 Verification and Migration",
+      "quote": "Action Required:** Verify in `cart/src/main/resources/db/changelog/ddl/changelog-0001.sql` whether the `cart_item` table enforces UNIQUE(`customer_id`, `product_id`). ... **Decision:** Add migration `changelog-0005.sql` to enforce uniqueness.",
+      "match": [],
+      "problem": "The spec asks Dev to verify and add a unique constraint on `cart_item`, but the entity already uses a composite primary key `@IdClass(CartItemId.class)` on `(customerId, productId)`, while the schema has single PK `id`. Adding a unique constraint without resolving the entity-schema mismatch would cause runtime errors.",
+      "change": "State explicitly: \"The entity `CartItem.java` uses `@IdClass(CartItemId.class)` with composite PK `(customerId, productId)`, which enforces uniqueness at the JPA level. No new migration is needed. If the schema's single-PK structure causes issues, the architect at the gate must resolve the entity-schema mismatch (outside this story's scope).\"",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 3,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "The spec says to verify whether a unique constraint exists and add a migration if missing. The entity `CartItem.java` uses `@IdClass(CartItemId.class)` with composite PK `(customerId, productId)`, which enforces uniqueness at the JPA level. The SQL migration in `changelog-0001.sql` creates `cart_item` with single PK `id bigint not null` and no unique constraint. Dev would add a migration that conflicts with the entity definition (entity has composite PK, schema has single PK), causing Hibernate schema validation failures or runtime errors.",
+      "trail": [
+        "round 3: raised (blocking)",
+        "round 3: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C5",
+      "file": "specs/3.md",
+      "section": "## Database Schema \u203a ### Cart Service \u2014 Verification and Migration \u203a **Decision:** Add migration `changelog-0005.sql` to enforce uniqueness.",
+      "quote": "",
+      "match": [],
+      "problem": "The story says to add a UNIQUE constraint on `(cart_id, product_id)` in a new migration `changelog-0005.sql`. The existing schema (see `cart/src/main/resources/db/changelog/ddl/changelog-0001.sql`) already has a primary key on `id`, not a composite key. The cart service's `CartItem` model (see `cart/src/main/java/com/yas/cart/model/CartItem.java`) uses `@IdClass(CartItemId.class)` with `@Id` on both `customerId` and `productId`, meaning the entity already enforces uniqueness at the ORM level for `(customerId, productId)`. The database schema and the entity are mismatched.",
+      "change": "Verify in the actual running database whether `cart_item` has a composite primary key on `(customer_id, product_id)` or a single `id` column. If it already has the composite PK, skip the migration. If it has only `id`, the migration is needed, but it must also align the entity's `@Id` fields with the schema. This is a schema-entity mismatch that the architect at the gate should resolve, as it cannot be fixed by rewriting the spec alone.",
+      "status": "note",
+      "reason": "the critic marked it a note",
+      "round": 1,
+      "decision": "",
+      "severity": "note",
+      "code_claim": true,
+      "blocks_because": "N/A (not blocking)",
+      "trail": [
+        "round 1: raised (note)",
+        "round 1: note: the critic marked it a note"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C6",
+      "file": "stories/01-app.md",
+      "section": "## Open Questions \u203a 1. Product Service Batch Endpoint",
+      "quote": "Does product service already have a batch product fetch endpoint? If not, Story 1 must implement parallel calls or propose a batch API addition. **Resolution:** Check `product/src/main/java/com/yas/product/controller/ProductStorefrontController.java`. If missing, implement parallel calls in `WishlistService.getWishlistItems()`.",
+      "match": [],
+      "problem": "The open question asks whether a batch endpoint exists and suggests parallel calls as a fallback, but the cart service's `ProductService.getProducts()` shows the product service already accepts multiple product IDs in one call.",
+      "change": "Remove the open question. In the `WishlistService` section, state: \"Call `ProductService.getProducts(List<Long> ids)` with all wishlist item product IDs in a single batch call (matches cart service pattern in `cart/src/main/java/com/yas/cart/service/ProductService.java`). No parallel fetch logic needed.\"",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 3,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would search for a batch endpoint or implement parallel calls, but the cart service's `ProductService.getProducts(List<Long> ids)` already shows the product service accepts a list of IDs in a single call (`queryParam(\"productId\", ids)`). Dev would waste time implementing a parallel-fetch solution that is unnecessary, or propose a batch endpoint that already exists.",
+      "trail": [
+        "round 3: raised (blocking)",
+        "round 3: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    }
+  ]
+}
