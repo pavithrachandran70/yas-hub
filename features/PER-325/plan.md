@@ -12,7 +12,7 @@ Display review summary in product page header using existing review data; no API
 
 ## Steps
 
-1. [ ] **analyst (inline_story)** — Convert ticket into implementable story with acceptance criteria for the UI changes.
+1. [x] **analyst (inline_story)** — Convert ticket into implementable story with acceptance criteria for the UI changes.
    - focus: Focus on the UI state management after review submission and the display logic for zero-review vs. multiple-review cases.
 2. [ ] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
 3. [ ] **dev** _(auto)_ — Loop delivery.
