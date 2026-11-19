@@ -14,10 +14,10 @@ Display review summary in product page header using existing review data; no API
 
 1. [x] **analyst (inline_story)** — Convert ticket into implementable story with acceptance criteria for the UI changes.
    - focus: Focus on the UI state management after review submission and the display logic for zero-review vs. multiple-review cases.
-2. [ ] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
-3. [ ] **dev** _(auto)_ — Loop delivery.
-4. [ ] **pre_pr_qa** _(auto)_ — Loop delivery.
-5. [ ] **open_pr** _(auto)_ — Loop delivery.
+2. [x] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
+3. [x] **dev** _(auto)_ — Loop delivery.
+4. [x] **pre_pr_qa** _(auto)_ — Loop delivery.
+5. [x] **open_pr** _(auto)_ — Loop delivery.
 6. [ ] **pr_review** _(auto)_ — Loop delivery.
 7. [ ] **merge** _(auto)_ — Loop delivery.
 
