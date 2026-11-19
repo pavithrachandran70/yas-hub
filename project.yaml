@@ -3,7 +3,7 @@ project: yas
 schema_version: 1
 ticket_store: linear
 linear:
-  team_id: d7ec692-ad55-4138-a986-119b25f08478
+  team_id: 4d7ec692-ad55-4138-a986-119b25f08478
 code_host: github
 llm:
   provider: anthropic
@@ -25,6 +25,7 @@ cursor:
   executor: cli
   mode_default: auto
   agent_bin: agent
+  model: grok-4.7-high
 repos:
   app:
     path_key: app
