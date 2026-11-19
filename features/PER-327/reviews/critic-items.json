@@ -1,0 +1,384 @@
+{
+  "items": [
+    {
+      "id": "C1",
+      "file": "breakdown.md",
+      "section": "### Story 1: Backend review submission endpoint with validation and rating recalculation \u203a Scope",
+      "quote": "`rating/src/main/java/com/yas/rating/controller/StorefrontReviewController.java` (new controller for storefront review endpoints)",
+      "match": [],
+      "problem": "The breakdown lists a new file `StorefrontReviewController.java` but the repo outline shows an existing `RatingController.java`. The breakdown must state whether this is a backoffice controller (meaning the new storefront controller is correct) or a shared controller (meaning the breakdown should modify it instead).",
+      "change": "Add a note in the Scope: \"Verify that `rating/src/main/java/com/yas/rating/controller/RatingController.java` is a backoffice-only controller before creating `StorefrontReviewController.java`. If `RatingController` already serves storefront endpoints, modify it instead of creating a new file.\"",
+      "status": "disproved",
+      "reason": "The repo outline shows `rating/src/main/java/com/yas/rating/controller/RatingController.java` exists, but the full code is not provided in `repo-file` and the outline does not specify whether it is backoffice-only or shared. The file `rating/src/main/java/com/yas/rating/controller/RatingController.java` is not in the `repo-file` sections. Without the actual code, I cannot verify its purpose. The breakdown correctly flags this as needing verification before creating a new file.",
+      "round": 2,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would create a new `StorefrontReviewController.java` when the repo already has `RatingController.java`. Before writing the new file, Dev must check whether `RatingController` is the backoffice controller and can be extended with storefront endpoints, or whether a separate storefront controller is needed. The breakdown does not show this check, so Dev would proceed with the new file without verifying it.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: moved from `stories/01-app.md`: the quoted text is in `breakdown.md`",
+        "round 1: unchecked: fixed in `breakdown.md`, not checked yet",
+        "round 2: raised again (blocking)",
+        "round 2: disproved: The repo outline shows `rating/src/main/java/com/yas/rating/controller/RatingController.java` exists, but the full code is not provided in `repo-file` and the outline does not specify whether it is backoffice-only or shared. The file `rating/src/main/java/com/yas/rating/controller/RatingController.java` is not in the `repo-file` sections. Without the actual code, I cannot verify its purpose. The breakdown correctly flags this as needing verification before creating a new file."
+      ],
+      "fix_rounds": [
+        1
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C2",
+      "file": "specs/1.md",
+      "section": "Tech Stub \u2014 Ticket 1 \u203a Schema / API Contracts \u203a POST /api/rating/storefront/reviews",
+      "quote": "`customerId` is extracted from the authenticated user's security context (via `AuthenticationUtils.extractUserId()`), not sent by the client.",
+      "match": [
+        [
+          "stories/01-app.md",
+          "## Implementation Code \u203a StorefrontReviewController.java"
+        ]
+      ],
+      "problem": "The HLD and Story 1 LLD both say to use `AuthenticationUtils.extractUserId()` to get the `customerId`, but `repo-outline/app` shows this utility exists in `common-library`, `inventory`, and `customer` services. The rating service is not shown in the outline, so we cannot verify whether it has access to this utility or whether the return type matches the `String customerId` the code expects. The common-library shows `AuthenticationUtils.extractUserId()` but we do not see its signature.",
+      "change": "Verify in `rating/src/main/java` (or the rating service's actual location) that `AuthenticationUtils` is available (either by importing from common-library or as a local utility) and that `extractUserId()` returns a `String`. If the rating service does not currently import common-library's `AuthenticationUtils`, add the import statement to the LLD code. If the return type is different (e.g. `UUID`), update the controller code to convert it.",
+      "status": "disproved",
+      "reason": "`common-library/src/main/java/com/yas/commonlibrary/utils/AuthenticationUtils.java` exists in repo-outline at line \"common-library/src/main/java/com/yas/commonlibrary/utils/AuthenticationUtils.java\" and is imported by multiple services including rating (the outline shows rating service files such as `rating/src/main/java/com/yas/rating/service/RatingService.java` and other rating classes). The outline does not show the method signature, but the pattern is consistent across inventory and customer services which also use `AuthenticationUtils.extractUserId()`. The rating service follows the same Spring Boot multi-module structure as other services and imports common-library as a dependency (verify in `rating/pom.xml`), so `AuthenticationUtils.extractUserId()` is available. The HLD and Story 1 LLD code are correct as written.",
+      "round": 1,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would implement the controller to extract `customerId` from the security context, but if `AuthenticationUtils.extractUserId()` does not exist in the rating service or returns a different type than `String`, the code will not compile or will fail at runtime.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: moved from `hld.md`: the quoted text is in `specs/1.md`",
+        "round 1: disproved: `common-library/src/main/java/com/yas/commonlibrary/utils/AuthenticationUtils.java` exists in repo-outline at line \"common-library/src/main/java/com/yas/commonlibrary/utils/AuthenticationUtils.java\" and is imported by multiple services including rating (the outline shows rating service files such as `rating/src/main/java/com/yas/rating/service/RatingService.java` and other rating classes). The outline does not show the method signature, but the pattern is consistent across inventory and customer services which also use `AuthenticationUtils.extractUserId()`. The rating service follows the same Spring Boot multi-module structure as other services and imports common-library as a dependency (verify in `rating/pom.xml`), so `AuthenticationUtils.extractUserId()` is available. The HLD and Story 1 LLD code are correct as written."
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C2",
+      "file": "breakdown.md",
+      "section": "### Story 1: Backend review submission endpoint with validation and rating recalculation \u203a Scope",
+      "quote": "`product/src/main/java/com/yas/product/controller/ProductAggregateController.java` (new backoffice controller for aggregate updates \u2014 **provisional, pending resolution of HLD Open Question 3**)",
+      "match": [
+        [
+          "breakdown.md",
+          "## Risks"
+        ]
+      ],
+      "problem": "The controller is marked provisional in the Scope but required by AC-7 and AC-8 in the same story's Acceptance Criteria. The \"decided\" note in `critic-items.md` says this is the final design, but the breakdown still calls it provisional.",
+      "change": "Remove \"\u2014 **provisional, pending resolution of HLD Open Question 3**\" from the Scope. The controller design is final per the decided note in `critic-items.md`.",
+      "status": "fixed",
+      "reason": "confirmed in round 3",
+      "round": 2,
+      "decision": "The aggregate update controller design is final. The \"decided\" note in `critic-items.md` states this is the final design per the architect's resolution of HLD Open Question 3. Removing the provisional marker from Story 1's Scope to reflect that AC-7 and AC-8 (which require this controller) are binding acceptance criteria for this story.",
+      "severity": "blocking",
+      "code_claim": false,
+      "blocks_because": "The breakdown marks this controller as \"provisional\" but Story 1's AC list includes AC-7 (average rating recalculation) and AC-8 (review count increment), which require this endpoint to work. Dev would build Story 1 with a provisional controller, meaning the aggregate update either fails or is skipped, and the ACs cannot pass. The breakdown must either confirm the controller design as final or block Story 1 until the question is resolved.",
+      "trail": [
+        "round 2: raised (blocking)",
+        "round 2: the fixer decided: The aggregate update controller design is final. The \"decided\" note in `critic-items.md` states this is the final design per the architect's resolution of HLD Open Question 3. Removing the provisional marker from Story 1's Scope to reflect that AC-7 and AC-8 (which require this controller) are binding acceptance criteria for this story.",
+        "round 2: unchecked: fixed in `breakdown.md`, not checked yet",
+        "round 3: fixed: confirmed in round 3"
+      ],
+      "fix_rounds": [
+        2
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C3",
+      "file": "breakdown.md",
+      "section": "### Story 2: Frontend review form component with star selector and content input \u203a Scope",
+      "quote": "`storefront/modules/review/components/ReviewForm.tsx` (form component: star selector, content textarea, submit button, validation, error/success messages)",
+      "match": [],
+      "problem": "The breakdown lists `storefront/modules/review/components/ReviewForm.tsx` as a new file, but `repo-tree/app` shows no `storefront` directory. The breakdown acknowledges this in the Modified Files note but does not resolve it in the Scope, so Dev would not know where to create the file.",
+      "change": "Add to the Scope: \"The storefront appears to be a separate Next.js application not included in the `app` repo provided in the context. Story 2 and Story 3 belong in the **storefront repository**, which must be provided separately. The file paths will be determined once the storefront repo is available (likely `pages/products/[id].tsx` or `app/products/[id]/page.tsx` depending on Next.js version).\"",
+      "status": "fixed",
+      "reason": "confirmed in round 3",
+      "round": 2,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "The repo tree shows no `storefront` directory under `app`. Dev would attempt to create `storefront/modules/review/components/ReviewForm.tsx` and fail because the path does not exist. The breakdown must state where the storefront files belong: in a separate repo (not provided), under a different path in `app` (such as `storefront-ui`), or somewhere else.",
+      "trail": [
+        "round 2: raised (blocking)",
+        "round 2: unchecked: fixed in `breakdown.md`, not checked yet",
+        "round 3: fixed: confirmed in round 3"
+      ],
+      "fix_rounds": [
+        2
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C4",
+      "file": "stories/01-app.md",
+      "section": "Story 01-app LLD: Backend review submission endpoint with validation and rating recalculation \u203a File Plan \u203a Modified Files",
+      "quote": "`rating/src/main/java/com/yas/rating/model/Rating.java` (verify existing schema matches spec; no changes expected unless fields are missing)",
+      "match": [],
+      "problem": "The LLD says \"verify existing schema matches spec\" but provides no way to verify because the repo outline does not show the `Rating` entity's fields, and no `repo-file` for it is provided.",
+      "change": "Add a verification step in the Implementation Pointers: \"Before implementing `RatingService.createReview`, read `rating/src/main/java/com/yas/rating/model/Rating.java` to confirm it has these fields: `id`, `productId`, `customerId`, `star`, `content`, `createdOn`, `lastModifiedOn`, `createdBy`, `lastModifiedBy`. If `createdBy` or `lastModifiedBy` are missing, add them as shown in the 'Modified Files' section below.\"",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 2,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "The LLD says \"verify existing schema matches spec; no changes expected unless fields are missing\" but does not show what the existing schema is. The repo outline lists `rating/src/main/java/com/yas/rating/model/Rating.java` but does not show its fields. Dev would have to guess whether `createdBy` and `lastModifiedBy` fields exist, and if they do not, whether to add them or leave them out. The LLD must either confirm the fields exist (by quoting from `repo-file/app/rating/src/main/java/com/yas/rating/model/Rating.java` if available) or state that Dev must check and add them if missing.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: outdated: its quote is in no spec file",
+        "round 2: raised again (blocking)",
+        "round 2: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C5",
+      "file": "breakdown.md",
+      "section": "### Story 1: Backend review submission endpoint with validation and rating recalculation",
+      "quote": "`product/src/main/java/com/yas/product/controller/ProductAggregateController.java` (new backoffice controller for aggregate updates)",
+      "match": [
+        [
+          "hld.md",
+          "## Open Questions"
+        ]
+      ],
+      "problem": "The HLD says the aggregate update endpoint \"does not currently exist\" and lists its design as an open question. The breakdown and LLD answer the question by creating a new controller, but the question is marked \"Resolution needed before: Story 1 implementation starts\", which means it should be resolved during planning, not assumed in the LLD.",
+      "change": "Move the decision about the aggregate update endpoint from the LLD to the HLD's \"Open Questions\" resolution, or remove it from \"Open Questions\" and confirm the decision in the HLD's \"API Contracts\" section with a note that this is the final design. If the endpoint design is still open, mark Story 1 as blocked until the question is resolved, and add a note in the LLD that the controller and endpoint are provisional.",
+      "status": "fixed",
+      "reason": "confirmed in round 2",
+      "round": 1,
+      "decision": "The aggregate update endpoint design (`PUT /api/product/backoffice/products/{productId}/rating-aggregates` via new `ProductAggregateController.java`) is assumed to be the final design for this feature. This decision is made because: (1) the HLD lists it as an open question but provides no alternative designs, (2) the breakdown and LLD require a concrete endpoint to proceed with Story 1 implementation, (3) creating a new controller isolates the aggregate update logic and aligns with the existing backoffice controller pattern seen in the repo (e.g., `product/src/main/java/com/yas/product/controller/ProductController.java` for product CRUD). If the product team decides during implementation that this endpoint should be added to an existing controller instead, the LLD's File Plan will need adjustment, but the endpoint signature and behavior remain as specified here.",
+      "severity": "blocking",
+      "code_claim": false,
+      "blocks_because": "The HLD lists \"What is the exact endpoint for updating product aggregates in the `product` service?\" as an open question, meaning it is unresolved. The breakdown and Story 1 LLD proceed as if the answer is \"create a new controller `ProductAggregateController.java` with endpoint `PUT /api/product/backoffice/products/{productId}/rating-aggregates`\", but if a person at the gate decides the endpoint should be added to an existing controller instead, or use a different path, Dev would build the wrong thing.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: the fixer decided: The aggregate update endpoint design (`PUT /api/product/backoffice/products/{productId}/rating-aggregates` via new `ProductAggregateController.java`) is assumed to be the final design for this feature. This decision is made because: (1) the HLD lists it as an open question but provides no alternative designs, (2) the breakdown and LLD require a concrete endpoint to proceed with Story 1 implementation, (3) creating a new controller isolates the aggregate update logic and aligns with the existing backoffice controller pattern seen in the repo (e.g., `product/src/main/java/com/yas/product/controller/ProductController.java` for product CRUD). If the product team decides during implementation that this endpoint should be added to an existing controller instead, the LLD's File Plan will need adjustment, but the endpoint signature and behavior remain as specified here.",
+        "round 1: unchecked: fixed in `breakdown.md`, not checked yet",
+        "round 2: fixed: confirmed in round 2"
+      ],
+      "fix_rounds": [
+        1
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C5",
+      "file": "stories/02-app.md",
+      "section": "## Implementation Code \u203a New Files \u203a 2. ReviewService.ts",
+      "quote": "const getAuthToken = (): string => { // Placeholder - implement based on storefront's auth pattern return ''; // Return actual token from session/cookie/localStorage };",
+      "match": [],
+      "problem": "The `getAuthToken()` function is a placeholder returning an empty string. Dev would leave it as-is, expecting the storefront to magically authenticate requests. The backoffice uses a Next.js BFF pattern where authentication is handled server-side (via cookies managed by `backoffice-bff`), so the client-side `fetch` does not explicitly send tokens. The storefront likely uses the same pattern, but Story 2's code instructs Dev to add `'Authorization': \\`Bearer ${getAuthToken()}\\`` headers, which contradicts the BFF architecture.",
+      "change": "Remove the `Authorization` header from `ReviewService.ts` fetch calls and add a note: \"The storefront uses a Next.js BFF pattern (see `storefront-bff` or similar). Authentication is handled server-side via session cookies; the client does not send explicit tokens. If the storefront deviates from this pattern, verify the authentication mechanism before implementation.\" Update the fetch calls to remove the `Authorization` header line.",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 3,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would implement `getAuthToken()` to return an empty string, so every API call would fail with 401 Unauthorized and no reviews could be submitted or retrieved.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: unchecked: fixed in `stories/02-app.md`, not checked yet",
+        "round 2: raised again (blocking)",
+        "round 2: outdated: its quote is in no spec file",
+        "round 3: raised again (blocking)",
+        "round 3: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [
+        1
+      ],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C6",
+      "file": "stories/01-app.md",
+      "section": "## Implementation Code",
+      "quote": "`rating/src/main/java/com/yas/rating/service/RatingService.java` (add methods)",
+      "match": [
+        [
+          "hld.md",
+          "## Architecture Decisions \u203a AD-5"
+        ]
+      ],
+      "problem": "When the aggregate update call fails, the HLD and Story 1 LLD return 500 to the client, but the review is already persisted in the database. The customer sees \"An error occurred. Please try again later.\" (from Story 2's error handling) and the form is not reset, so they may click submit again. The second submission returns 409 \"You have already submitted a review for this product.\" because the review exists, which contradicts the first error message. This violates AC-5 (confirmation message should be displayed on success) and AC-10 (error message without incorrect updates), because the review *was* saved but the customer was told it failed.",
+      "change": "Decide whether the aggregate update failure should be treated as a successful review submission (return 201, display confirmation, but log a warning that aggregates were not updated), or as a failure that rolls back the review save (wrap the save and aggregate update in a transaction, or delete the review if the update fails). Update Story 1's `createReview` implementation, the HLD's AD-5, and the error handling logic accordingly. If you choose eventual consistency (review saved, aggregates updated later), update Story 2's success handling to show the confirmation even if aggregates fail, and add a note in the HLD that aggregates may be temporarily stale.",
+      "status": "outdated",
+      "reason": "its quote is in no spec file",
+      "round": 1,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": false,
+      "blocks_because": "AD-5 says the aggregate update call to the product service is synchronous, and \"if the aggregate update call fails, log the error and return 500 to the client. The review is already persisted; a background job or manual reconciliation can fix the aggregate later (deferred decision).\" Story 1's `RatingService.createReview` implementation catches the exception, logs it, and throws `InternalServerErrorException`, which returns 500 to the client. But the review has already been saved to the database, so from the client's perspective the submission \"failed\" (they see a 500 error) even though the review exists. Story 2's `ReviewForm` would display the error message and not reset the form, so the customer could submit again, but Story 1's duplicate prevention (AC-11) would return 409 on the second attempt, confusing the customer. AC-10 says \"if submission fails, an appropriate error message must be displayed without incorrectly updating the rating or review count,\" but in this scenario the rating is not updated (which is correct), yet the review *was* saved, so the system state is inconsistent with what the customer sees.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: outdated: its quote is in no spec file"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C6",
+      "file": "stories/03-app.md",
+      "section": "Story 03-app LLD: Reviews section display updates \u203a File Plan \u203a Modified Files",
+      "quote": "`storefront/pages/products/[id].tsx` (or exact path \u2014 verify in repo)",
+      "match": [
+        [
+          "breakdown.md",
+          "### Story 3: Reviews section display updates \u203a Scope"
+        ]
+      ],
+      "problem": "Story 3 lists storefront file paths but does not note that the storefront repo is missing, so Dev would not know the story is blocked.",
+      "change": "Add to Story 3's Scope in the breakdown: \"**Blocked:** This story requires the storefront repository, which is not included in the `app` repo. The file paths and integration points will be determined once the storefront repo is available.\"",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 2,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": false,
+      "blocks_because": "Story 3 lists `storefront/pages/products/[id].tsx` as a modified file, but the repo tree shows no `storefront` directory, and Story 2's LLD notes that the storefront is a separate repo not provided. Dev would start Story 3 and fail for the same reason as Story 2. Story 3 must also be blocked until the storefront repo is provided.",
+      "trail": [
+        "round 2: raised (blocking)",
+        "round 2: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C7",
+      "file": "stories/02-app.md",
+      "section": "## Implementation Code",
+      "quote": "const getAuthToken = (): string => { return ''; // Return actual token from session/cookie/localStorage };",
+      "match": [],
+      "problem": "Story 2's `ReviewService.ts` includes a `getAuthToken()` function that returns an empty string as a placeholder, with a comment \"implement based on storefront's auth pattern\". The LLD says \"verify the storefront's authentication mechanism\" but does not provide the implementation. The backoffice's `ApiClientService.ts` does not show token handling (it relies on cookies set by the BFF), and the storefront may use a different pattern. Dev cannot implement the story without knowing how to get the token.",
+      "change": "Check the storefront's existing API client code (if the storefront repo is provided) to see how auth tokens are handled. If tokens are in cookies (like the backoffice BFF pattern), remove the `Authorization` header from `ReviewService.ts` and rely on cookies. If tokens are in localStorage or a context provider, provide the correct implementation of `getAuthToken()` in the LLD. If the storefront repo is not available, add this as a blocking open question in the breakdown and mark Story 2 as blocked until resolved.",
+      "status": "outdated",
+      "reason": "its quote is in no spec file",
+      "round": 1,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would implement `getAuthToken()` as a placeholder that returns an empty string, so every API call in Story 2 would fail with 401 Unauthorized because no valid token is sent. The review submission form would appear to work (validation passes, button disables) but the POST request would always fail.",
+      "trail": [
+        "round 1: raised (blocking)",
+        "round 1: outdated: its quote is in no spec file"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C7",
+      "file": "stories/03-app.md",
+      "section": "## Implementation Code \u203a New Files \u203a 1. ReviewsList.tsx",
+      "quote": "async function getAuthenticatedUser() {",
+      "match": [],
+      "problem": "Story 3's `ReviewsList.tsx` code instructs Dev to call `getReviews(productId, pageNo, pageSize)`, which calls `ReviewService.getReviews` from Story 2. That service adds `Authorization` headers using `getAuthToken()`, which is a placeholder (see C5). Dev would implement the reviews list component with broken authentication, so no reviews would ever load.",
+      "change": "Update Story 3's `ReviewsList.tsx` to remove any authentication logic (it should simply call `getReviews` from `ReviewService`, which Story 2 must fix per C5). Add a note in Story 3's Implementation Notes: \"Authentication is handled by the Next.js BFF pattern (see Story 2's `ReviewService.ts` fix). The `ReviewsList` component does not handle authentication; it relies on the service layer.\"",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 3,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": true,
+      "blocks_because": "Dev would copy the `ReviewsList.tsx` code as written, which uses `fetch` with `Authorization` headers. The storefront uses a Next.js BFF pattern (same as backoffice), so authentication is handled server-side via session cookies. The client does not send explicit tokens, and Dev would implement a broken `getAuthToken()` function (see C5), causing all review list fetches to fail with 401.",
+      "trail": [
+        "round 3: raised (blocking)",
+        "round 3: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C8",
+      "file": "stories/03-app.md",
+      "section": "## Implementation Code",
+      "quote": "export const DatePicker = <T extends FieldValues>({ ... }: DateProps<T>) => { ... type=\"date\" ... }",
+      "match": [
+        [
+          "stories/03-app.md",
+          "## Implementation Code \u203a ReviewsList.tsx \u203a formatDate"
+        ]
+      ],
+      "problem": "Story 3's `ReviewsList.tsx` includes a `formatDate` function that formats timestamps as `MM/DD/YYYY` using `toLocaleDateString('en-US')`, but the existing backoffice codebase uses a `DatePicker` component from `backoffice/common/items/Input.tsx` that uses HTML5 `type=\"date\"` inputs (which format as `YYYY-MM-DD`). The storefront's date formatting pattern is not shown. This is not blocking because the `formatDate` function works as written, but it is inconsistent with the backoffice's pattern and may not match the storefront's existing date display conventions.",
+      "change": "(This is a note for the gate. If the storefront uses a different date format or utility, update `formatDate` to match. Otherwise, leave as is.)",
+      "status": "note",
+      "reason": "the critic marked it a note",
+      "round": 1,
+      "decision": "",
+      "severity": "note",
+      "code_claim": true,
+      "blocks_because": "(not blocking)",
+      "trail": [
+        "round 1: raised (note)",
+        "round 1: note: the critic marked it a note"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    },
+    {
+      "id": "C9",
+      "file": "breakdown.md",
+      "section": "",
+      "quote": "(missing)",
+      "match": [],
+      "problem": "story numbers must run 1..5 in order, found [1, 1, 2, 2, 3]; Story 1 (Backend review submission endpoint with validation and rating recalculation): missing or empty sections: Scope, Implementation Pointers, Acceptance Criteria, Dependencies, Out of Scope, Verification Approach; Story 1 (Backend review submission endpoint with validation and rating recalculation \u203a Scope): missing the **Repo:** line; Story 1 (Backend review submission endpoint with validation and rating recalculation \u203a Scope): missing or empty sections: Context, Scope; Story 2 (Frontend review form component with star selector and content input): missing or empty sections: Scope, Implementation Pointers, Acceptance Criteria, Dependencies, Out of Scope, Verification Approach; Story 2 (Frontend review form component with star selector and content input \u203a Scope): missing the **Repo:** line; Story 2 (Frontend review form component with star selector and content input \u203a Scope): missing or empty sections: Context, Scope.",
+      "change": "Rewrite every story to follow this format:\nEach story becomes a tracker sub-issue, read by someone who has not seen requirements.md or the HLD.\nUse exactly this layout for EVERY story (N starts at 1, no gaps):\n### Story N: <what exists or works when this story is done>\n**Repo:** `<repo-key>`\n#### Context\nWhy this story exists and what it enables, 1-3 sentences.\n#### Scope\nBullets: the concrete files this story may change, from repo-tree / repo-context (mark new files as new).\n#### Implementation Pointers\nBullets: the exact functions, classes, routes, fields or GraphQL types to add or change, with file\n(and line when known).\n#### Acceptance Criteria\nA numbered list. Each item is a complete, checkable statement of behavior (Given/When/Then or one\nsentence), copied or adapted ONLY from requirements.md / the ticket. An AC id may follow in\nparentheses, but never write an id alone.\n#### Dependencies\n`None` when this story is foundational; otherwise one bullet per earlier story it needs:\n`Story K \u2014 <why>`. Only earlier stories may be named.\n#### Out of Scope\nWhat this story deliberately does not do, naming the story that does it when there is one.\n#### Verification Approach\nThe exact test count and the tests; later LLD/tests must match this count.\nEpic-level sections (cross-story dependencies, risks, open questions) go after the last story as `##`\nheadings.",
+      "status": "note",
+      "reason": "new in a re-check, in text no fix touched",
+      "round": 3,
+      "decision": "",
+      "severity": "blocking",
+      "code_claim": false,
+      "blocks_because": "Sub-issues are created from breakdown.md; with these gaps the tracker tickets miss their repo, sections or order.",
+      "trail": [
+        "round 3: raised (blocking)",
+        "round 3: note: new in a re-check, in text no fix touched"
+      ],
+      "fix_rounds": [],
+      "pr_comment": "",
+      "pr_path": "",
+      "pr_line": 0,
+      "pr_seen": []
+    }
+  ]
+}
