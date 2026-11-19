@@ -14,10 +14,10 @@ Backend validation fix for rating star values: enforce 1-5 range in existing Rat
 
 1. [x] **analyst (inline_story)** — Ticket clearly describes the validation change needed in RatingPostVm and RatingService.
    - focus: Focus on backend validation rules for the star field (1-5 inclusive), error responses, and database prevention.
-2. [ ] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
-3. [ ] **dev** _(auto)_ — Loop delivery.
-4. [ ] **pre_pr_qa** _(auto)_ — Loop delivery.
-5. [ ] **open_pr** _(auto)_ — Loop delivery.
+2. [x] **architect_gate (review)** _(auto)_ — Human approval of specs and this plan before Dev.
+3. [x] **dev** _(auto)_ — Loop delivery.
+4. [x] **pre_pr_qa** _(auto)_ — Loop delivery.
+5. [x] **open_pr** _(auto)_ — Loop delivery.
 6. [ ] **pr_review** _(auto)_ — Loop delivery.
 7. [ ] **merge** _(auto)_ — Loop delivery.
 
