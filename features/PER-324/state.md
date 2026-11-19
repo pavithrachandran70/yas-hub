@@ -1,20 +1,20 @@
 ---
 schema_version: 1
 key: PER-324
-status: waiting_architect_review
-current_node: architect_gate
+status: in_development
+current_node: dev
 track: complex
 involved_repos:
 - app
 depends_on: []
 owner: pavc
-lease_until: '2026-11-21T07:13:36.349097+00:00'
-revision: 18
+lease_until: '2026-11-21T07:16:56.279588+00:00'
+revision: 26
 hub_sha: null
 ticket_hash: 00b2ff5f800fa932
 jira_hash: 00b2ff5f800fa932
-tpm_approved: false
-specs_locked: false
+tpm_approved: true
+specs_locked: true
 skills_lock:
   bmad: 1cbcfa272fe65787c06a1fa164a901f46117cca7
 stories:
@@ -28,13 +28,13 @@ pr_ids:
   hub_plan: '4'
   hub_arch: '5'
   hub: '5'
-waiting_for: architect_review
+waiting_for: null
 tokens_in: 25084
 tokens_out: 3275
 cost_anthropic_usd: 0.124037
-cursor_tokens_in: 0
-cursor_tokens_out: 0
-cursor_cache_read_tokens: 0
+cursor_tokens_in: 86540
+cursor_tokens_out: 35996
+cursor_cache_read_tokens: 2232576
 cursor_cache_write_tokens: 0
 history:
 - node: intake
@@ -85,6 +85,30 @@ history:
 - node: architect_gate
   note: awaiting human hub PR approval
   at: '2026-11-19T07:14:34.417677+00:00'
+- node: architect_gate
+  note: approved via hub PR (reconcile)
+  at: '2026-11-19T07:16:56.253803+00:00'
+- node: architect_gate
+  note: "forge unlocked architect_review \u2192 resume"
+  at: '2026-11-19T07:16:56.279630+00:00'
+- node: architect_gate
+  note: 'repo graph: app: Gortex skipped (gortex call contracts failed: Error: required_capability_incomplete:
+    graph.contracts did not become complete within this request: contract analysis
+    of these inp)'
+  at: '2026-11-19T07:16:57.312662+00:00'
+- node: dev
+  note: no breakdown.md (inline story); no sub-issues to create
+  at: '2026-11-19T07:16:57.327821+00:00'
+- node: dev
+  note: starting
+  at: '2026-11-19T07:16:57.327851+00:00'
+- node: dev
+  note: 'not checked before PR, commands empty in project.yaml: repos.app.commands.test,
+    repos.app.commands.lint'
+  at: '2026-11-19T07:16:57.327883+00:00'
+- node: dev
+  note: done 01-app
+  at: '2026-11-19T07:26:53.728385+00:00'
 ---
 
 # Feature state

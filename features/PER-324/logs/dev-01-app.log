@@ -1,0 +1,21 @@
+I'll implement the PER-324 story from the story file and code context, starting by reading both so the changes stay inside that scope.
+The story is a backend validation fix for rating stars. I'll look at the rating service, view model, and how this app already returns validation errors.
+Star values are stored with no range check, so a rating of 0 or 99 can be saved and pulled into the product average. I'll enforce 1–5 in the view model and in `createRating` before anything is written.
+Validation is in place before the write. Next I’ll add the boundary tests and confirm invalid stars stay out of the average.
+The rating module targets Java 25. I'll run its unit tests with that JDK.
+Creating a rating now rejects any star value outside 1–5 before it is saved, and the product average counts only ratings inside that range.
+
+- `RatingPostVm` requires `star` to be from 1 to 5 (`@Min` / `@Max`, message `must be between 1 and 5`).
+- `RatingService.createRating` runs that validation before any repository call. A failure throws `ConstraintViolationException`, which the existing handler returns as HTTP 400 with `statusCode` `400 BAD_REQUEST`, title `Bad Request`, detail `Request information is not valid`, and a `star` field error.
+- The average query includes only stars from 1 to 5, so values such as 0 or 99 do not affect the average.
+
+`mvn -pl rating -am test` passed: `RatingPostVmTest`, `RatingServiceTest`, and `RatingControllerTest` (45 tests, 0 failures).
+
+Files changed:
+
+- `rating/src/main/java/com/yas/rating/viewmodel/RatingPostVm.java`
+- `rating/src/main/java/com/yas/rating/service/RatingService.java`
+- `rating/src/main/java/com/yas/rating/repository/RatingRepository.java`
+- `rating/src/test/java/com/yas/rating/service/RatingServiceTest.java`
+- `rating/src/test/java/com/yas/rating/viewmodel/RatingPostVmTest.java`
+- `rating/src/test/java/com/yas/rating/controller/RatingControllerTest.java`The background JDK search was stopped. The rating change is already in place, and the rating unit tests passed.
