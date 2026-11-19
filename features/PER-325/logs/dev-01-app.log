@@ -1,0 +1,21 @@
+I'll implement story 01-app from the PER-325 feature folder. First I'm reading the story and the repo's code context so the change stays inside that scope.
+The story is a UI-only product-page rating change. I'll look up the LLD and the current product page so the header and Reviews tab stay in sync with the reviews already loaded.
+The header still uses a separate average that does not refresh after a review is posted, and an anonymous review never shows stars. I'll sync both displays with the reviews the page already loads.
+The product-page tests fail because Next’s router is not mounted in Jest. I’ll mock that router and run the suite again.
+The product page header and the Reviews tab now describe the same reviews the page already loads. After a successful post, both update in place and the list stays at 5 reviews per page.
+
+With reviews, the header shows the star rating, the average to one decimal place (for example `4.3`), and `1 review` or `N reviews`. The Reviews tab title uses that same count. With none, the header and the Reviews tab both show "No reviews yet", with no stars and no zero-count text. A review with no first or last name shows "Anonymous" and its stars. A named review still shows the name, stars, text, and how long ago it was posted. A refused post still shows the existing message and leaves the form as it is.
+
+Storefront Jest: 22 tests passed. This was not opened in a browser.
+
+Files changed:
+
+- `storefront/pages/products/[slug].tsx`
+- `storefront/modules/catalog/components/DetailHeader.tsx`
+- `storefront/modules/catalog/components/ProductDetails.tsx`
+- `storefront/modules/rating/components/RatingList.tsx`
+- `storefront/modules/rating/reviewSummary.ts`
+- `storefront/styles/productDetail.css`
+- `storefront/__tests__/products/ProductPage.test.tsx`
+- `storefront/__tests__/rating/DetailHeader.test.tsx`
+- `storefront/__tests__/rating/RatingList.test.tsx`
