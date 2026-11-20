@@ -1,0 +1,3 @@
+repo graph: Neo4j is not reachable at bolt://127.0.0.1:7687: Couldn't connect to 127.0.0.1:7687 (resolved to ('127.0.0.1:7687',)):
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [Errno 111] Connection refused)
+ADLC needs the repo graph. Start Neo4j (e.g. `docker start adlc-neo4j`) and check NEO4J_URI / NEO4J_USER / NEO4J_PASSWORD in .env, then run the command again.
